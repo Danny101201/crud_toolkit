@@ -19,7 +19,18 @@ const TaskAdaptor = createEntityAdapter<Task>({
 const taskSlice = createSlice({
   name: 'task',
   initialState: TaskAdaptor.getInitialState({ errormessage: '' }),
-  reducers: {},
+  reducers: {
+    addTask: (state, action) => {
+      const { email } = action.payload
+      const Tasks = TaskAdaptor.getSelectors().selectAll(state)
+      Tasks.forEach(Task => {
+        if (Task.email == email) {
+        }
+        TaskAdaptor.addOne(state, action.payload)
+      })
+
+    }
+  },
   extraReducers: builder => {
     builder.addCase(getCommentsApi.fulfilled, (state, action) => {
       TaskAdaptor.setAll(state, action.payload)
@@ -29,6 +40,7 @@ const taskSlice = createSlice({
     })
   },
 })
+export const { addTask } = taskSlice.actions
 
-export const { selectAll: taskSelectorAll} = TaskAdaptor.getSelectors<RootState>(state => state.task)
+export const { selectAll: taskSelectorAll, selectTotal: taskSelectorCount } = TaskAdaptor.getSelectors<RootState>(state => state.task)
 export default taskSlice.reducer
