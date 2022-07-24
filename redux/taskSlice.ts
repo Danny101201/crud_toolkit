@@ -29,7 +29,8 @@ const taskSlice = createSlice({
         TaskAdaptor.addOne(state, action.payload)
       })
 
-    }
+    },
+    deleteTask: TaskAdaptor.removeOne
   },
   extraReducers: builder => {
     builder.addCase(getCommentsApi.fulfilled, (state, action) => {
@@ -40,7 +41,7 @@ const taskSlice = createSlice({
     })
   },
 })
-export const { addTask } = taskSlice.actions
+export const { addTask, deleteTask } = taskSlice.actions
 
 export const { selectAll: taskSelectorAll, selectTotal: taskSelectorCount } = TaskAdaptor.getSelectors<RootState>(state => state.task)
 export default taskSlice.reducer

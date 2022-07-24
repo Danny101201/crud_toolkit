@@ -1,5 +1,6 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { v4 as uuidv4 } from 'uuid';
 
 import { AppDispatch } from 'redux/store'
 import { addTask, taskSelectorCount } from 'redux/taskSlice'
@@ -27,7 +28,7 @@ function TaskForm() {
     e.preventDefault()
     dispatch(addTask({
       id: taskCount + 1,
-      postId: Math.floor(Math.random() * 10000),
+      postId: uuidv4(),
       name: info.name,
       email: info.email,
       body: info.description
