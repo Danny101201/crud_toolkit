@@ -2,13 +2,12 @@ import { createSlice, createEntityAdapter, createAsyncThunk } from "@reduxjs/too
 import build from "next/dist/build";
 import { RootState } from "./store";
 
+
 export const getCommentsApi = createAsyncThunk(
   "task/fetchByComment",
   async (_, thunkApi) => {
-    const { rejectWithValue } = thunkApi
 
-    rejectWithValue('error')
-    const data = await fetch('https://jsonplaceholder.typicode.com/comments?_limit=10').then(res => res.json()).catch(err => rejectWithValue(err))
+    const data = await fetch('https://jsonplaceholder.typicode.com/comments?_limit=10').then(res => res.json())
     return data
   }
 )
@@ -30,7 +29,8 @@ const taskSlice = createSlice({
       })
 
     },
-    deleteTask: TaskAdaptor.removeOne
+    deleteTask: TaskAdaptor.removeOne,
+    updateTask: TaskAdaptor.updateOne
   },
   extraReducers: builder => {
     builder.addCase(getCommentsApi.fulfilled, (state, action) => {
@@ -41,7 +41,11 @@ const taskSlice = createSlice({
     })
   },
 })
-export const { addTask, deleteTask } = taskSlice.actions
+export const { addTask, deleteTask,updateTask } = taskSlice.actions
 
-export const { selectAll: taskSelectorAll, selectTotal: taskSelectorCount } = TaskAdaptor.getSelectors<RootState>(state => state.task)
+export const {
+  selectAll: taskSelectorAll,
+  selectTotal: taskSelectorCount,
+  selectById: taskSelectorById
+} = TaskAdaptor.getSelectors<RootState>(state => state.task)
 export default taskSlice.reducer

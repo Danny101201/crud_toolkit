@@ -1,8 +1,9 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { v4 as uuidv4 } from 'uuid';
+import { useRouter } from 'next/router';
 
-import { AppDispatch } from 'redux/store'
+import { useAppDispatch } from 'redux/hook';
 import { addTask, taskSelectorCount } from 'redux/taskSlice'
 type FormType = {
   name: string,
@@ -10,12 +11,14 @@ type FormType = {
   description: string
 }
 function TaskForm() {
+  const router = useRouter()
   const [info, setInfo] = useState<FormType>({
     name: '',
     email: '',
     description: ''
   })
-  const dispatch = useDispatch()
+  
+  const dispatch = useAppDispatch()
   const taskCount = useSelector(taskSelectorCount)
   console.log(taskCount)
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -33,10 +36,12 @@ function TaskForm() {
       email: info.email,
       body: info.description
     }))
+    router.replace('/')
   }
   return (
     <div className=" bg-amber-400 p-5 rounded-md">
-      <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-5">
+      <h1>Add task</h1>
+      <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-5 p-">
         <div>
           <label>name</label>
           <input name="name" type="text" className='border w-full' onChange={handleChange} />

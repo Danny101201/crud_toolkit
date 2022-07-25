@@ -18,7 +18,7 @@ const Home: NextPage = () => {
   return (
     <div className='container mx-auto pt-6 flex flex-col items-center'>
       <div>
-        <TaskForm />
+      
         <TaskList />
       </div>
     </div>
