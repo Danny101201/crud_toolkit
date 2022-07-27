@@ -44,7 +44,7 @@ function TaskItem() {
             <input name="email" type="text" value={info.email} className='border w-full' onChange={handleChange} />
           </div>
           <div className="col-span-full">
-            <label>description</label>
+            <label>descriptions</label>
             <textarea name="description" value={info.description} className='border w-full' onChange={handleChange} />
           </div>
           <button type="submit" className="btn btn-primary mr-auto">submit</button>
